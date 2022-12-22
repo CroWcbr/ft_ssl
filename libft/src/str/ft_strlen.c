@@ -1,17 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sha256.c                                           :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/25 22:37:14 by cdarrell          #+#    #+#             */
-/*   Updated: 2022/12/21 21:35:19 by cdarrell         ###   ########.fr       */
+/*   Created: 2021/10/04 17:48:17 by cdarrell          #+#    #+#             */
+/*   Updated: 2021/10/06 20:40:09 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ssl.h"
+#include "libft.h"
 
-void	sha256(const char *str, const uint64_t len)
+size_t	ft_strlen(const char *s)
 {
+	int	i;
+
+	i = 0;
+	while (*(s + i))
+		i++;
+	return (i);
 }

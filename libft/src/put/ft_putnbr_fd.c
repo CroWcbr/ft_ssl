@@ -1,17 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sha256.c                                           :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/25 22:37:14 by cdarrell          #+#    #+#             */
-/*   Updated: 2022/12/21 21:35:19 by cdarrell         ###   ########.fr       */
+/*   Created: 2021/10/05 17:26:34 by cdarrell          #+#    #+#             */
+/*   Updated: 2021/10/05 17:47:47 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ssl.h"
+#include "libft.h"
 
-void	sha256(const char *str, const uint64_t len)
+void	ft_putnbr_fd(int n, int fd)
 {
+	long int	tmp_n;
+
+	tmp_n = n;
+	if (tmp_n < 0)
+	{
+		ft_putchar_fd('-', fd);
+		tmp_n *= -1;
+	}
+	if (tmp_n >= 10)
+		ft_putnbr_fd(tmp_n / 10, fd);
+	ft_putchar_fd('0' + tmp_n % 10, fd);
 }

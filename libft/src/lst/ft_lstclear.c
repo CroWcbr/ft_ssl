@@ -1,17 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sha256.c                                           :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/25 22:37:14 by cdarrell          #+#    #+#             */
-/*   Updated: 2022/12/21 21:35:19 by cdarrell         ###   ########.fr       */
+/*   Created: 2021/10/05 20:51:09 by cdarrell          #+#    #+#             */
+/*   Updated: 2021/10/05 20:51:17 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ssl.h"
+#include "libft.h"
 
-void	sha256(const char *str, const uint64_t len)
+void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
+	t_list	*tmp;
+
+	if (!lst || !del || !(*lst))
+		return ;
+	while (*lst)
+	{
+		tmp = (*lst)->next;
+		(*del)((*lst)->content);
+		free(*lst);
+		*lst = tmp;
+	}
 }

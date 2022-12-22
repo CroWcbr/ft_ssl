@@ -1,17 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sha256.c                                           :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/25 22:37:14 by cdarrell          #+#    #+#             */
-/*   Updated: 2022/12/21 21:35:19 by cdarrell         ###   ########.fr       */
+/*   Created: 2021/10/05 21:09:35 by cdarrell          #+#    #+#             */
+/*   Updated: 2021/10/05 21:09:44 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ssl.h"
+#include "libft.h"
 
-void	sha256(const char *str, const uint64_t len)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
+	t_list	*tmp;
+
+	if (!lst || !f)
+		return ;
+	tmp = lst;
+	while (tmp)
+	{
+		(*f)(tmp->content);
+		tmp = tmp->next;
+	}
 }

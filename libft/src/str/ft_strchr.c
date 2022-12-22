@@ -1,17 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sha256.c                                           :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/25 22:37:14 by cdarrell          #+#    #+#             */
-/*   Updated: 2022/12/21 21:35:19 by cdarrell         ###   ########.fr       */
+/*   Created: 2021/10/04 19:12:09 by cdarrell          #+#    #+#             */
+/*   Updated: 2021/10/05 20:26:37 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ssl.h"
-
-void	sha256(const char *str, const uint64_t len)
+char	*ft_strchr(const char *s, int c)
 {
+	char	tmp_c;
+
+	tmp_c = (char)c;
+	while (*s)
+	{
+		if (*s == tmp_c)
+			return ((char *)s);
+		s++;
+	}
+	if (*s == tmp_c)
+		return ((char *)s);
+	return ((void *)0);
 }
