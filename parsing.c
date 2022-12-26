@@ -6,35 +6,35 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:43:45 by cdarrell          #+#    #+#             */
-/*   Updated: 2022/12/22 22:04:48 by cdarrell         ###   ########.fr       */
+/*   Updated: 2022/12/25 15:15:08 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
-static void	check_usage(int argc, char **argv)
+static int	check_usage(char *argv)
 {
-	if (argc == 1)
-		printf("usage: ft_ssl command [flags] [file/string]");
-	else if (ft_strcmp(argv[1], "md5") && \
-			ft_strcmp(argv[1], "sha256") && \
-			ft_strcmp(argv[1], "sha512") && \
-			ft_strcmp(argv[1], "whirlpool"))
+	if (ft_strcmp(argv, "md5") && \
+			ft_strcmp(argv, "sha256") && \
+			ft_strcmp(argv, "sha512") && \
+			ft_strcmp(argv, "whirlpool"))
 	{
-		printf("ft_ssl: Error: '%s' is an invalid command.\n", argv[1]);
-		printf("\n");
-		printf("Commands:\n");
-		printf("md5\n");
-		printf("sha256\n");
-		printf("sha512\n");
-		printf("whirlpool\n");
-		printf("\n");
-		printf("Flags:\n");
-		printf("-p -q -r -s\n");
+		ft_putstr("ft_ssl: Error: [");
+		ft_putstr(argv);
+		ft_putstr("] is an invalid command.\n");
+		ft_putstr("\n");
+		ft_putstr("Commands:\n");
+		ft_putstr("md5\n");
+		ft_putstr("sha256\n");
+		ft_putstr("sha512\n");
+		ft_putstr("whirlpool\n");
+		ft_putstr("\n");
+		ft_putstr("Flags:\n");
+		ft_putstr("-p -q -r -s\n");
+		return (0);
 	}
 	else
-		return ;
-	exit (1);
+		return (1);
 }
 
 static t_ssl	*init_ssl(char *hash_alg)
@@ -43,8 +43,8 @@ static t_ssl	*init_ssl(char *hash_alg)
 
 	ssl = malloc(sizeof(t_ssl));
 	if (!ssl)
-		ft_error("Error malloc: parsing.c - init_ssl");
-	ssl->hash = ft_strdup(hash_alg);
+		ft_err("Error malloc: parsing.c - init_ssl - ssl");
+	ssl->hash = hash_alg;
 	if (!ft_strcmp(hash_alg, "md5"))
 		ssl->hash_func = &md5;
 	else if (!ft_strcmp(hash_alg, "sha256"))
@@ -56,6 +56,7 @@ static t_ssl	*init_ssl(char *hash_alg)
 	ssl->p = false;
 	ssl->q = false;
 	ssl->r = false;
+	ssl->s = false;
 	ssl->hash_list = NULL;
 	return (ssl);
 }
@@ -69,7 +70,7 @@ static void	parse_hash_list(char **argv, t_ssl	*ssl)
 	{
 		input = malloc(sizeof(t_hash));
 		if (!input)
-			ft_error("Error malloc: parsing.c - parse_hash_list");
+			ft_err("Error malloc: parsing.c - parse_hash_list - input");
 		input->type = true;
 		if (ssl->s == true)
 		{
@@ -78,17 +79,19 @@ static void	parse_hash_list(char **argv, t_ssl	*ssl)
 		}
 		input->name = ft_strdup(*argv);
 		if (!input->name)
-			ft_error("Error malloc: parsing.c - parse_hash_list");
-		input->hash = NULL;
+			ft_err("Error malloc: parsing.c - parse_hash_list - input->name");
+		input->len = 0;
+		if (!input->type)
+			input->len = ft_strlen(input->name);
 		new_list = ft_lstnew(input);
 		if (!new_list)
-			ft_error("Error malloc: parsing.c - parse_hash_list");
+			ft_err("Error malloc: parsing.c - parse_hash_list - new_list");
 		ft_lstadd_back(&ssl->hash_list, new_list);
 		argv++;
 	}
 }
 
-static void	parse_argv(char **argv, t_ssl *ssl)
+static int	parse_argv(char **argv, t_ssl *ssl)
 {
 	while (*argv)
 	{
@@ -103,24 +106,32 @@ static void	parse_argv(char **argv, t_ssl *ssl)
 			ssl->s = true;
 			argv++;
 			if (!(*argv))
-				ft_error("Error parse_argv: flag s, but no string after");
+			{
+				ft_putstr("Error parse_argv: flag s, but no string after\n");
+				return (0);
+			}
 			break ;
 		}
 		else
 			break ;
 		argv++;
 	}
-	if (*argv)
-		parse_hash_list(argv, ssl);
+	parse_hash_list(argv, ssl);
+	return (1);
 }
 
-t_ssl	*parse(int argc, char **argv)
+t_ssl	*parse(char **argv)
 {
 	t_ssl	*ssl;
 
-	check_usage(argc, argv);
-	ssl = init_ssl(argv[1]);
-	parse_argv(argv + 2, ssl);
+	if (!check_usage(argv[0]))
+		return (NULL);
+	ssl = init_ssl(argv[0]);
+	if (!parse_argv(argv + 1, ssl))
+	{
+		free(ssl);
+		return (NULL);
+	}
 	if (ssl->p == true || !ssl->hash_list)
 		parse_flag_p(ssl);
 	return (ssl);

@@ -6,8 +6,11 @@ FLAGS		=	#-Wall -Wextra -Werror
 LIBFT_DIR	=	./libft
 LIBFT_LIB	=	libft.a
 
-HEADER		=	ft_ssl.h
+HEADER		=	ft_ssl.h \
+				md5.h
+
 SRC			=	ft_ssl.c \
+				ft_ssl_help.c \
 				parsing.c \
 				parsing_flag_p.c \
 				md5.c \

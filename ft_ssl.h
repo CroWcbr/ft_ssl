@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:53:49 by cdarrell          #+#    #+#             */
-/*   Updated: 2022/12/22 20:00:40 by cdarrell         ###   ########.fr       */
+/*   Updated: 2022/12/25 15:14:34 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,19 @@ typedef struct s_hash
 {
 	t_bool			type;
 	char			*name;
-	char			*hash;
+	uint64_t		len;
 }				t_hash;
 
-void		ft_error(char *str);
+void		ft_err(char *str);
 
-t_ssl		*parse(int argc, char **argv);
+t_ssl		*parse(char **argv);
 void		parse_flag_p(t_ssl *ssl);
 
 void		md5(const char *str, const uint64_t len);
 void		sha256(const char *str, const uint64_t len);
 void		sha512(const char *str, const uint64_t len);
 void		whirlpool(const char *str, const uint64_t len);
+
+void		print_ssl(t_ssl *ssl);
 
 #endif
