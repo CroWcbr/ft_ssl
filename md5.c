@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 22:34:39 by cdarrell          #+#    #+#             */
-/*   Updated: 2022/12/27 00:58:44 by cdarrell         ###   ########.fr       */
+/*   Updated: 2022/12/29 20:20:36 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static uint8_t	*md5_update_str(const char *str, \
 				const uint64_t len, uint64_t *new_len)
 {
 	uint8_t				*new_str;
-	uint64_t			tmp;
 	uint64_t			len_64_bit;
 
 	*new_len = ((len + 1) / 64 + 1 + ((len + 1) % 64 > 56)) * 64;
@@ -29,15 +28,30 @@ static uint8_t	*md5_update_str(const char *str, \
 	ft_memset(new_str + len, 1 << 7, 1);
 	len_64_bit = len * 8;
 	ft_memcpy(new_str + *new_len - 8, &len_64_bit, 8);
+
+	int j = 0;
+	while (j < 128)
+	{
+		int i = 7;
+		printf("%d\t%d\t", j, (int)new_str[j]);
+		while (i >= 0)
+		{
+			printf("%d", (new_str[j] & (1 << i)) >> i);
+			i--;
+		}
+		printf("\n");
+		j++;
+	}
+
 	return (new_str);
 }
 
 void	md5_algo(const uint8_t *new_str, \
 		const uint64_t new_len, uint32_t *md_buf, uint32_t *md)
 {
-	int				kk;
-	unsigned int	F;
-	unsigned int	g;
+	int			kk;
+	uint32_t	F;
+	uint32_t	g;
 
 	kk = 0;
 	while (kk < new_len / 64)
@@ -92,8 +106,8 @@ void	md5(const char *str, const uint64_t len)
 {
 	uint8_t			*new_str;
 	uint64_t		new_len;
-	uint32_t		md[4];
 	uint32_t		md_buf[4];
+	uint32_t		md[4];
 
 	new_str = md5_update_str(str, len, &new_len);
 	md_buf[A] = 0x67452301;
@@ -101,6 +115,8 @@ void	md5(const char *str, const uint64_t len)
 	md_buf[C] = 0x98badcfe;
 	md_buf[D] = 0x10325476;
 	md5_algo(new_str, new_len, md_buf, md);
+
+
 	unsigned int	tmp = md_buf[A];
 	printf("%02x %02x %02x %02x", tmp % 256 , tmp / 256 % 256 , tmp / 256 / 256 % 256 , tmp / 256 /256 / 256 % 256);
 	tmp = md_buf[B];

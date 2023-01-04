@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:43:49 by cdarrell          #+#    #+#             */
-/*   Updated: 2022/12/26 22:44:21 by cdarrell         ###   ########.fr       */
+/*   Updated: 2022/12/27 02:55:29 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,68 @@ static void	work_like_openssl(void)
 	}
 }
 
+void	*ft_mmemcpy(void *dst, const void *src, size_t n)
+{
+	unsigned char	*tmp_dst;
+	unsigned char	*tmp_src;
+	size_t			i;
+
+	if (src == dst || n == 0)
+		return (dst);
+	tmp_dst = (unsigned char *)dst;
+	tmp_src = (unsigned char *)src;
+	i = -1;
+	while (++i < n)
+	{
+		printf("i = %ld\tsrc = %d\n" , i, (int)tmp_src[i]);
+		*(tmp_dst + i) = *(tmp_src + i);
+	}
+	return (dst);
+}
+
 int	main(int argc, char **argv)
 {
 	if (argc == 1)
 		work_like_openssl();
 	else
 		mandatory_part(argv + 1);
+
+	// int x = 1;
+	// unsigned char *tmp_x = (unsigned char *)(&x);
+	// printf("-----------\n");
+	// int k = 0;
+
+	// printf("addr_x = %p\n", &x);
+	// printf("addr_tmp_x = %p\n", tmp_x);
+	// while (k < 4)
+	// {
+	// 	printf("k = %d\t%d\t%p\n", k, (int)(*(tmp_x + k)), tmp_x + k);
+	// 	k++;
+	// }
+	// printf("-----------\n");
+	// printf("size1 = %ld\n" , sizeof(x));
+	// int j = 0;
+	// unsigned char str[4];
+	// ft_bzero(str, 4);
+	// ft_mmemcpy(str, &x, 4);
+
+
+	// while (j < 4)
+	// {
+	// 	printf("str = %d\n" , (int)str[j]);
+	// 	int i = 7;
+	// 	while (i >= 0)
+	// 	{
+	// 		printf("%d", (str[3 - j] & (1 << i)) >> i);
+	// 		i--;
+	// 	}
+	// 	printf("\n");
+	// 	j++;
+	// }
+	// printf("strJJJ = %d\n" , (int)str[j]);
+	
+
+
+
 	return (0);
 }
