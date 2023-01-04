@@ -6,3 +6,4 @@ in md5 - just append
 in shaXXX - move bits
 
 md5 finished without normiette
+sha256 working draft
