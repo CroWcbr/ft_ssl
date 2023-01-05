@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 20:12:37 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/01/04 23:54:13 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/01/05 20:38:19 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define H6	6
 # define H7	7
 
-static const uint32_t k[64] = {
+static const uint32_t	k[64] = {
 	0x428A2F98, 0x71374491, 0xB5C0FBCF, 0xE9B5DBA5, \
 	0x3956C25B, 0x59F111F1, 0x923F82A4, 0xAB1C5ED5, \
 	0xD807AA98, 0x12835B01, 0x243185BE, 0x550C7DC3, \

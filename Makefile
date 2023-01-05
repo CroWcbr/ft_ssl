@@ -7,7 +7,9 @@ LIBFT_DIR	=	./libft
 LIBFT_LIB	=	libft.a
 
 HEADER		=	ft_ssl.h \
-				md5.h
+				md5.h \
+				sha256.h \
+				sha512.h
 
 SRC			=	ft_ssl.c \
 				ft_ssl_help.c \
