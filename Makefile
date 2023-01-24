@@ -14,7 +14,9 @@ HEADER		=	ft_ssl.h \
 SRC			=	ft_ssl.c \
 				ft_ssl_help.c \
 				parsing.c \
-				parsing_flag_p.c \
+				parsing_argv.c \
+				parsing_print.c \
+				read_hash_file.c \
 				md5.c \
 				sha256.c \
 				sha512.c \

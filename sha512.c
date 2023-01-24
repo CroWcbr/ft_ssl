@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 22:37:14 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/01/05 22:17:00 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/01/23 22:19:23 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,60 +66,79 @@ void	sha512_algo(const uint8_t *new_str, \
 		uint64_t	w[80];
 		uint64_t i, j;
 
-		for (i = 0, j = 0; i < 16; ++i, j += 8)
+	int t;
+	for (t = 0; t < 16; t++)
+	{
+		w[t] = ((unsigned long long int) new_str[t * 8 + 0] << 56) |
+			((unsigned long long int) new_str[t * 8 + 1] << 48) |
+			((unsigned long long int) new_str[t * 8 + 2] << 40) |
+			((unsigned long long int) new_str[t * 8 + 3] << 32) |
+			((unsigned long long int) new_str[t * 8 + 4] << 24) |
+			((unsigned long long int) new_str[t * 8 + 5] << 16) |
+			((unsigned long long int) new_str[t * 8 + 6] << 8) |
+			((unsigned long long int) new_str[t * 8 + 7]);
+	}
+
+		for (t = 16; t < 80; t++) 
 		{
-			uint32_t x1 = (((new_str + kk * 64)[j]) << 24) | ((new_str + kk * 64)[j + 1] << 16) | ((new_str + kk * 64)[j + 2] << 8) | ((new_str + kk * 64)[j + 3]);
-			uint32_t x2 = (((new_str + kk * 64 + 64)[j]) << 24) | ((new_str + kk * 64 + 64)[j + 1] << 16) | ((new_str + kk * 64 + 64)[j + 2] << 8) | ((new_str + kk * 64 + 64)[j + 3]);
-
-			w[i] = (uint64_t)x2 >> 32 | (uint64_t)x1 << 32;
-
-			// w[i] = (((new_str + kk * 128)[j]) << 24) | ((new_str + kk * 128)[j + 1] << 16) | ((new_str + kk * 128)[j + 2] << 8) | ((new_str + kk * 128)[j + 3] | \
-			// 		((new_str + kk * 128)[j + 4]) << 56) | ((new_str + kk * 128)[j + 5] << 48) | ((new_str + kk * 128)[j + 6] << 40) | ((new_str + kk * 128)[j + 7] << 32);
-
-			// w[i] = (((new_str + kk * 128)[j]) << 56) | ((new_str + kk * 128)[j + 1] << 48) | ((new_str + kk * 128)[j + 2] << 40) | ((new_str + kk * 128)[j + 3] << 32 | \
-			// 		((new_str + kk * 128)[j + 4]) << 24) | ((new_str + kk * 128)[j + 5] << 16) | ((new_str + kk * 128)[j + 6] << 8) | ((new_str + kk * 128)[j + 7]);
-
+			w[t] = w[t-16] + (w[t-7] + SIG0(w[t-15]) + w[t-2]) + SIG1(w[t-2]);
 		}
+
+		// for (i = 0, j = 0; i < 16; ++i, j += 8)
+		// {
+		// 	uint32_t x1 = (((new_str + kk * 64)[j]) << 24) | ((new_str + kk * 64)[j + 1] << 16) | ((new_str + kk * 64)[j + 2] << 8) | ((new_str + kk * 64)[j + 3]);
+		// 	uint32_t x2 = (((new_str + kk * 64 + 64)[j]) << 24) | ((new_str + kk * 64 + 64)[j + 1] << 16) | ((new_str + kk * 64 + 64)[j + 2] << 8) | ((new_str + kk * 64 + 64)[j + 3]);
+
+		// 	w[i] = (uint64_t)x2 >> 32 | (uint64_t)x1 << 32;
+
+		// 	// w[i] = (((new_str + kk * 128)[j]) << 24) | ((new_str + kk * 128)[j + 1] << 16) | ((new_str + kk * 128)[j + 2] << 8) | ((new_str + kk * 128)[j + 3] | \
+		// 	// 		((new_str + kk * 128)[j + 4]) << 56) | ((new_str + kk * 128)[j + 5] << 48) | ((new_str + kk * 128)[j + 6] << 40) | ((new_str + kk * 128)[j + 7] << 32);
+
+		// 	// w[i] = (((new_str + kk * 128)[j]) << 56) | ((new_str + kk * 128)[j + 1] << 48) | ((new_str + kk * 128)[j + 2] << 40) | ((new_str + kk * 128)[j + 3] << 32 | \
+		// 	// 		((new_str + kk * 128)[j + 4]) << 24) | ((new_str + kk * 128)[j + 5] << 16) | ((new_str + kk * 128)[j + 6] << 8) | ((new_str + kk * 128)[j + 7]);
+
+		// }
 			// w[i] = (((new_str + kk * 128)[j]) << 56) | ((new_str + kk * 128)[j + 1] << 48) | ((new_str + kk * 128)[j + 2] << 40) | ((new_str + kk * 128)[j + 3] << 32 | \
 			// 		((new_str + kk * 128)[j + 4]) << 24) | ((new_str + kk * 128)[j + 5] << 16) | ((new_str + kk * 128)[j + 6] << 8) | ((new_str + kk * 128)[j + 7]);
 
-		for ( ; i < 80; ++i)
-			w[i] = SIG1(w[i - 2]) + w[i - 7] + SIG0(w[i - 15]) + w[i - 16];
+		// for ( ; i < 80; ++i)
+		// 	w[i] = SIG1(w[i - 2]) + w[i - 7] + SIG0(w[i - 15]) + w[i - 16];
 
-		print_testt("w", (uint8_t *)&w, 1024);
-	// 	sha[A] = sha_buf[H0];
-	// 	sha[B] = sha_buf[H1];
-	// 	sha[C] = sha_buf[H2];
-	// 	sha[D] = sha_buf[H3];
-	// 	sha[E] = sha_buf[H4];
-	// 	sha[F] = sha_buf[H5];
-	// 	sha[G] = sha_buf[H6];
-	// 	sha[H] = sha_buf[H7];
+		// print_testt("w", (uint8_t *)&w, 1024);
+		sha[A] = sha_buf[H0];
+		sha[B] = sha_buf[H1];
+		sha[C] = sha_buf[H2];
+		sha[D] = sha_buf[H3];
+		sha[E] = sha_buf[H4];
+		sha[F] = sha_buf[H5];
+		sha[G] = sha_buf[H6];
+		sha[H] = sha_buf[H7];
 
-	// 	uint64_t t1, t2;
-	// 	for (i = 0; i < 80; ++i) {
-	// 		t1 = sha[H] + EP1(sha[E]) + CH(sha[E],sha[F],sha[G]) + k[i] + w[i];
-	// 		t2 = EP0(sha[A]) + MAJ(sha[A],sha[B],sha[C]);
+		uint64_t t1, t2;
+		for (i = 0; i < 80; ++i) 
+		{
+			t1 = sha[H] + EP1(sha[E]) + CH(sha[E],sha[F],sha[G]) + k[i] + w[i];
+			t2 = EP0(sha[A]) + MAJ(sha[A],sha[B],sha[C]);
 
-	// 		sha[H] = sha[G];
-	// 		sha[G] = sha[F];
-	// 		sha[F] = sha[E];
-	// 		sha[E] = sha[D] + t1;
-	// 		sha[D] = sha[C];
-	// 		sha[C] = sha[B];
-	// 		sha[B] = sha[A];
-	// 		sha[A] = t1 + t2;
-	// 	}
-	// 	sha_buf[H0] += sha[A];
-	// 	sha_buf[H1] += sha[B];
-	// 	sha_buf[H2] += sha[C];
-	// 	sha_buf[H3] += sha[D];
-	// 	sha_buf[H4] += sha[E];
-	// 	sha_buf[H5] += sha[F];
-	// 	sha_buf[H6] += sha[G];
-	// 	sha_buf[H7] += sha[H];
+			sha[H] = sha[G];
+			sha[G] = sha[F];
+			sha[F] = sha[E];
+			sha[E] = sha[D] + t1;
+			sha[D] = sha[C];
+			sha[C] = sha[B];
+			sha[B] = sha[A];
+			sha[A] = t1 + t2;
+		}
+		sha_buf[H0] += sha[A];
+		sha_buf[H1] += sha[B];
+		sha_buf[H2] += sha[C];
+		sha_buf[H3] += sha[D];
+		sha_buf[H4] += sha[E];
+		sha_buf[H5] += sha[F];
+		sha_buf[H6] += sha[G];
+		sha_buf[H7] += sha[H];
 
-	// 	kk++;
+		kk++;
 	// }
 }
 

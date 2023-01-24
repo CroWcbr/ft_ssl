@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:43:45 by cdarrell          #+#    #+#             */
-/*   Updated: 2022/12/25 15:15:08 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/01/24 23:14:27 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,30 @@ static int	check_usage(char *argv)
 		return (1);
 }
 
+static void	*init_ssl_hash_function(t_ssl *ssl)
+{
+	if (!ft_strcmp(ssl->hash, "md5"))
+	{
+		ssl->hash_func = &md5;
+		ssl->crypt_len = 16;
+	}
+	else if (!ft_strcmp(ssl->hash, "sha256"))
+	{
+		ssl->hash_func = &sha256;
+		ssl->crypt_len = 32;
+	}
+	else if (!ft_strcmp(ssl->hash, "sha512"))
+	{
+		ssl->hash_func = &sha512;
+		ssl->crypt_len = 64;
+	}
+	else if (!ft_strcmp(ssl->hash, "whirlpool"))
+	{
+		ssl->hash_func = &whirlpool;
+		ssl->crypt_len = 64;
+	}
+}
+
 static t_ssl	*init_ssl(char *hash_alg)
 {	
 	t_ssl	*ssl;
@@ -45,14 +69,7 @@ static t_ssl	*init_ssl(char *hash_alg)
 	if (!ssl)
 		ft_err("Error malloc: parsing.c - init_ssl - ssl");
 	ssl->hash = hash_alg;
-	if (!ft_strcmp(hash_alg, "md5"))
-		ssl->hash_func = &md5;
-	else if (!ft_strcmp(hash_alg, "sha256"))
-		ssl->hash_func = &sha256;
-	else if (!ft_strcmp(hash_alg, "sha512"))
-		ssl->hash_func = &sha512;
-	else if (!ft_strcmp(hash_alg, "whirlpool"))
-		ssl->hash_func = &whirlpool;
+	init_ssl_hash_function(ssl);
 	ssl->p = false;
 	ssl->q = false;
 	ssl->r = false;
@@ -61,63 +78,18 @@ static t_ssl	*init_ssl(char *hash_alg)
 	return (ssl);
 }
 
-static void	parse_hash_list(char **argv, t_ssl	*ssl)
+t_hash	*create_hash_node(char *name)
 {
-	t_list	*new_list;
 	t_hash	*input;
 
-	while (*argv)
-	{
-		input = malloc(sizeof(t_hash));
-		if (!input)
-			ft_err("Error malloc: parsing.c - parse_hash_list - input");
-		input->type = true;
-		if (ssl->s == true)
-		{
-			ssl->s = false;
-			input->type = false;
-		}
-		input->name = ft_strdup(*argv);
-		if (!input->name)
-			ft_err("Error malloc: parsing.c - parse_hash_list - input->name");
-		input->len = 0;
-		if (!input->type)
-			input->len = ft_strlen(input->name);
-		new_list = ft_lstnew(input);
-		if (!new_list)
-			ft_err("Error malloc: parsing.c - parse_hash_list - new_list");
-		ft_lstadd_back(&ssl->hash_list, new_list);
-		argv++;
-	}
-}
-
-static int	parse_argv(char **argv, t_ssl *ssl)
-{
-	while (*argv)
-	{
-		if (!ft_strcmp(*argv, "-p"))
-			ssl->p = true;
-		else if (!ft_strcmp(*argv, "-q"))
-			ssl->q = true;
-		else if (!ft_strcmp(*argv, "-r"))
-			ssl->r = true;
-		else if (!ft_strcmp(*argv, "-s"))
-		{
-			ssl->s = true;
-			argv++;
-			if (!(*argv))
-			{
-				ft_putstr("Error parse_argv: flag s, but no string after\n");
-				return (0);
-			}
-			break ;
-		}
-		else
-			break ;
-		argv++;
-	}
-	parse_hash_list(argv, ssl);
-	return (1);
+	input = malloc(sizeof(t_hash));
+	if (!input)
+		ft_err("Error malloc: parsing.c - parse_hash_list - input");
+	input->type = true;
+	input->name = ft_strdup(name);
+	if (!input->name)
+		ft_err("Error malloc: parsing.c - parse_hash_list - input->name");
+	return (input);
 }
 
 t_ssl	*parse(char **argv)

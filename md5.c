@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 22:34:39 by cdarrell          #+#    #+#             */
-/*   Updated: 2022/12/29 20:20:36 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/01/24 23:32:22 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,19 @@ static uint8_t	*md5_update_str(const char *str, \
 	len_64_bit = len * 8;
 	ft_memcpy(new_str + *new_len - 8, &len_64_bit, 8);
 
-	int j = 0;
-	while (j < 128)
-	{
-		int i = 7;
-		printf("%d\t%d\t", j, (int)new_str[j]);
-		while (i >= 0)
-		{
-			printf("%d", (new_str[j] & (1 << i)) >> i);
-			i--;
-		}
-		printf("\n");
-		j++;
-	}
+	// int j = 0;
+	// while (j < 128)
+	// {
+	// 	int i = 7;
+	// 	printf("%d\t%d\t", j, (int)new_str[j]);
+	// 	while (i >= 0)
+	// 	{
+	// 		printf("%d", (new_str[j] & (1 << i)) >> i);
+	// 		i--;
+	// 	}
+	// 	printf("\n");
+	// 	j++;
+	// }
 
 	return (new_str);
 }
@@ -116,17 +116,7 @@ void	md5(const char *str, const uint64_t len)
 	md_buf[D] = 0x10325476;
 	md5_algo(new_str, new_len, md_buf, md);
 
-
-	unsigned int	tmp = md_buf[A];
-	printf("%02x %02x %02x %02x", tmp % 256 , tmp / 256 % 256 , tmp / 256 / 256 % 256 , tmp / 256 /256 / 256 % 256);
-	tmp = md_buf[B];
-	printf("%02x %02x %02x %02x", tmp % 256 , tmp / 256 % 256 , tmp / 256 / 256 % 256 , tmp / 256 /256 / 256 % 256);
-	tmp = md_buf[C];
-	printf("%02x %02x %02x %02x", tmp % 256 , tmp / 256 % 256 , tmp / 256 / 256 % 256 , tmp / 256 /256 / 256 % 256);
-	tmp = md_buf[D];
-	printf("%02x %02x %02x %02x", tmp % 256 , tmp / 256 % 256 , tmp / 256 / 256 % 256 , tmp / 256 /256 / 256 % 256);
-	printf("\n");
-	unsigned char	digist[16];
+	uint8_t	digist[16];
 	ft_memcpy(digist + 0, &md_buf[A], 4);
 	ft_memcpy(digist + 4, &md_buf[B], 4);
 	ft_memcpy(digist + 8, &md_buf[C], 4);
