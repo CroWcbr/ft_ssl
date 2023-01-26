@@ -12,12 +12,13 @@ HEADER		=	ft_ssl.h \
 				sha512.h
 
 SRC			=	ft_ssl.c \
+				ft_ssl_read_hash_file.c \
 				ft_ssl_help.c \
 				parsing.c \
 				parsing_argv.c \
 				parsing_print.c \
-				read_hash_file.c \
 				md5.c \
+				md5_algorithm.c \
 				sha256.c \
 				sha512.c \
 				whirlpool.c

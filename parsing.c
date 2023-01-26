@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:43:45 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/01/24 23:14:27 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/01/25 00:34:21 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	*init_ssl_hash_function(t_ssl *ssl)
 {
 	if (!ft_strcmp(ssl->hash, "md5"))
 	{
-		ssl->hash_func = &md5;
+		ssl->hash_func = &md5_main;
 		ssl->crypt_len = 16;
 	}
 	else if (!ft_strcmp(ssl->hash, "sha256"))

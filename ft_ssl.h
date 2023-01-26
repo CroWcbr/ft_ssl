@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:53:49 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/01/24 23:28:24 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:25:34 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ void		read_file(void (*hash_func)(const char *str, const uint64_t len), \
 
 void		ft_err(char *str);
 
-void		md5(const char *str, const uint64_t len);
+uint8_t		*md5_main(const char *str, const uint64_t len);
+void		md5_algorithm(const uint8_t *str, \
+							uint32_t *md_buf, uint32_t *md_tmp);
+
 void		sha256(const char *str, const uint64_t len);
 void		sha512(const char *str, const uint64_t len);
 void		whirlpool(const char *str, const uint64_t len);
