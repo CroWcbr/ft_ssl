@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:43:49 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/01/24 23:28:20 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/01/27 02:16:24 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void	mandatory_part(char **argv)
 	t_list		*tmp;
 	t_hash		*hash;
 
+uint8_t *ttt;
+
 	ssl = parse(argv);
 	if (!ssl)
 		return ;
@@ -27,12 +29,17 @@ static void	mandatory_part(char **argv)
 	{
 		hash = (t_hash *)tmp->content;
 		if (hash->type == false)
-			ssl->hash_func(hash->name, ft_strlen(hash->name));
+			ttt = ssl->hash_func(hash->name, ft_strlen(hash->name));
 		else
-			read_file(ssl->hash_func, hash);
+			ttt = read_file(ssl->hash_func, hash);
 		free(hash->name);
 		tmp = tmp->next;
+			for (int iii = 0; iii < ssl->crypt_len; iii++)
+		printf("%02x", ttt[iii]);
+		printf("\n");
+		free(ttt);
 	}
+
 	ft_lstclear(&ssl->hash_list, free);
 	free(ssl);
 }

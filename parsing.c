@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:43:45 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/01/25 00:34:21 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:17:40 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,19 @@ static void	*init_ssl_hash_function(t_ssl *ssl)
 	}
 	else if (!ft_strcmp(ssl->hash, "sha256"))
 	{
-		ssl->hash_func = &sha256;
+		ssl->hash_func = &sha256_main;
 		ssl->crypt_len = 32;
 	}
-	else if (!ft_strcmp(ssl->hash, "sha512"))
-	{
-		ssl->hash_func = &sha512;
-		ssl->crypt_len = 64;
-	}
-	else if (!ft_strcmp(ssl->hash, "whirlpool"))
-	{
-		ssl->hash_func = &whirlpool;
-		ssl->crypt_len = 64;
-	}
+	// else if (!ft_strcmp(ssl->hash, "sha512"))
+	// {
+	// 	ssl->hash_func = &sha512;
+	// 	ssl->crypt_len = 64;
+	// }
+	// else if (!ft_strcmp(ssl->hash, "whirlpool"))
+	// {
+	// 	ssl->hash_func = &whirlpool;
+	// 	ssl->crypt_len = 64;
+	// }
 }
 
 static t_ssl	*init_ssl(char *hash_alg)

@@ -20,6 +20,7 @@ SRC			=	ft_ssl.c \
 				md5.c \
 				md5_algorithm.c \
 				sha256.c \
+				sha256_algorithm.c \
 				sha512.c \
 				whirlpool.c
 

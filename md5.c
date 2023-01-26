@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 22:34:39 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/01/26 16:25:23 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/01/27 02:16:53 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	md5_init(t_md5 *md5, const char *str, const uint64_t *len)
 	md5->md_buf[B] = 0xefcdab89;
 	md5->md_buf[C] = 0x98badcfe;
 	md5->md_buf[D] = 0x10325476;
-	md5->result = malloc(16);
+	md5->result = malloc(16 * (sizeof(uint8_t)));
 	if (!md5->result)
 		ft_err("Error malloc: md5.c - md5_init - md5->result");
 }
@@ -73,8 +73,5 @@ uint8_t	*md5_main(const char *str, const uint64_t len)
 	ft_memcpy(md5.result + 4, &md5.md_buf[B], 4);
 	ft_memcpy(md5.result + 8, &md5.md_buf[C], 4);
 	ft_memcpy(md5.result + 12, &md5.md_buf[D], 4);
-	for (int iii = 0; iii < 16; iii++)
-		printf("%02x ", md5.result[iii]);
-	printf("\n");
 	return md5.result;
 }
