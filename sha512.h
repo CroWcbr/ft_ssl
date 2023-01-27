@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 20:12:37 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/01/05 20:45:53 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/01/27 17:42:41 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <stdint.h>
 
-#define ROTLEFT(a,b) (((a) << (b)) | ((a) >> (64-(b))))
 #define ROTRIGHT(a,b) (((a) >> (b)) | ((a) << (64-(b))))
 #define CH(x,y,z) (((x) & (y)) ^ (~(x) & (z)))
 #define MAJ(x,y,z) (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))
@@ -33,16 +32,7 @@
 # define G 6
 # define H 7
 
-# define H0	0
-# define H1	1
-# define H2	2
-# define H3	3
-# define H4	4
-# define H5	5
-# define H6	6
-# define H7	7
-
-static const uint64_t	k[80] = {
+static const uint64_t	g_k[80] = {
 	0x428a2f98d728ae22, 0x7137449123ef65cd, 0xb5c0fbcfec4d3b2f, \
 	0xe9b5dba58189dbbc, 0x3956c25bf348b538, 0x59f111f1b605d019, \
 	0x923f82a4af194f9b, 0xab1c5ed5da6d8118, 0xd807aa98a3030242, \
@@ -71,5 +61,16 @@ static const uint64_t	k[80] = {
 	0x431d67c49c100d4c, 0x4cc5d4becb3e42b6, 0x597f299cfc657e2a, \
 	0x5fcb6fab3ad6faec, 0x6c44198c4a475817 \
 };
+
+typedef struct s_sha512
+{
+	uint8_t			*str;
+	uint64_t		len;
+	uint64_t		pos;
+	uint64_t		len_64_bit;
+	uint64_t		sha_buf[8];
+	uint64_t		sha_tmp[8];
+	uint8_t			*result;
+}t_sha512;
 
 #endif

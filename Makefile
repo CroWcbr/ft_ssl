@@ -22,6 +22,7 @@ SRC			=	ft_ssl.c \
 				sha256.c \
 				sha256_algorithm.c \
 				sha512.c \
+				sha512_algorithm.c \
 				whirlpool.c
 
 OBJ_DIR		=	obj

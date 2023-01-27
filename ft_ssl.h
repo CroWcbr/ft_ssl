@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:53:49 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/01/27 00:41:42 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/01/27 17:26:54 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ uint8_t		*sha256_main(const char *str, const uint64_t len);
 void		sha256_algorithm(const uint8_t *str, \
 							uint32_t *md_buf, uint32_t *md_tmp);
 
-// void		sha512(const char *str, const uint64_t len);
+uint8_t		*sha512_main(const char *str, const uint64_t len);
+void		sha512_algorithm(const uint8_t *str, \
+						uint64_t *sha_buf, uint64_t *sha_tmp);
+
 // void		whirlpool(const char *str, const uint64_t len);
 
 #endif
