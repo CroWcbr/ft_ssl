@@ -2,8 +2,11 @@
 
 my PC has LITTLE-endian format
 
-in md5 - just append
-in shaXXX - move bits
+- in md5 - just append
+- in shaXXX - move bits
 
-md5 finished without normiette
-sha256 working draft
+## Progress
+- md5 finished
+- sha256 finished
+- sha512 finished
+- whirlpool in progress
