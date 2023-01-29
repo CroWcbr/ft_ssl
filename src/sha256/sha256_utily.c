@@ -1,41 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ssl_help.c                                      :+:      :+:    :+:   */
+/*   sha256_utily.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/24 18:28:33 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/01/27 00:41:23 by cdarrell         ###   ########.fr       */
+/*   Created: 2023/01/29 03:14:39 by cdarrell          #+#    #+#             */
+/*   Updated: 2023/01/29 03:18:14 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ssl.h"
+#include "../../include/sha256.h"
+// #define CH(x,y,z)		(((x) & (y)) ^ (~(x) & (z)))
+// #define MAJ(x,y,z)		(((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))
 
-void	ft_err(char *str)
+uint32_t	sha256_ch(uint32_t x, uint32_t y, uint32_t z)
 {
-	ft_putstr(str);
-	exit (1);
+	return ((x & y) ^ (~x & z));
 }
 
-void print_test(char *err, uint8_t *tt, int len_byte)
+uint32_t	sha256_maj(uint32_t x, uint32_t y, uint32_t z)
 {
-	int jj = 0;
-	printf("\n%s\n", err);
-	while (jj < len_byte)
-	{
-		int i = 7;
-		if (jj % 4 == 0)
-			printf("%d\t", jj);
-		while (i >= 0)
-		{
-			printf("%d", (tt[jj] >> i) & 1);
-			i--;
-		}
-		printf(" ");
-		jj++;
-		if (jj % 4 == 0)
-			printf("\n");
-	}
-	printf("\n");
+	return ((x & y) ^ (x & z) ^ (y & z));
 }

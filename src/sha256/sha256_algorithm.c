@@ -6,11 +6,11 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 20:23:42 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/01/29 01:02:41 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/01/29 03:59:18 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/sha256.h"
+#include "sha256.h"
 
 static void	sha256_find_w(uint32_t *w, const uint8_t *str)
 {
@@ -28,7 +28,8 @@ static void	sha256_find_w(uint32_t *w, const uint8_t *str)
 	}
 	while (i < 64)
 	{
-		w[i] = SIG1(w[i - 2]) + w[i - 7] + SIG0(w[i - 15]) + w[i - 16];
+		w[i] = sha256_op_sig1(w[i - 2]) + w[i - 7] + \
+				sha256_op_sig0(w[i - 15]) + w[i - 16];
 		i++;
 	}
 }
@@ -42,9 +43,10 @@ static void	sha256_update_sha_tmp(uint32_t *sha_tmp, uint32_t *w)
 	i = -1;
 	while (++i < 64)
 	{
-		t1 = sha_tmp[H] + EP1(sha_tmp[E]) + \
-			CH(sha_tmp[E], sha_tmp[F], sha_tmp[G]) + g_k[i] + w[i];
-		t2 = EP0(sha_tmp[A]) + MAJ(sha_tmp[A], sha_tmp[B], sha_tmp[C]);
+		t1 = sha_tmp[H] + sha256_op_ep1(sha_tmp[E]) + \
+			sha256_ch(sha_tmp[E], sha_tmp[F], sha_tmp[G]) + g_k[i] + w[i];
+		t2 = sha256_op_ep0(sha_tmp[A]) + \
+			sha256_maj(sha_tmp[A], sha_tmp[B], sha_tmp[C]);
 		sha_tmp[H] = sha_tmp[G];
 		sha_tmp[G] = sha_tmp[F];
 		sha_tmp[F] = sha_tmp[E];

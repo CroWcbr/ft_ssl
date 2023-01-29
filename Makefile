@@ -20,8 +20,12 @@ SRC			=	ft_ssl.c \
 				md5/md5_algorithm.c \
 				sha256/sha256.c \
 				sha256/sha256_algorithm.c \
+				sha256/sha256_utily.c \
+				sha256/sha256_utily2.c \
 				sha512/sha512.c \
 				sha512/sha512_algorithm.c \
+				sha512/sha512_utily.c \
+				sha512/sha512_utily2.c \
 				whirlpool/whirlpool.c
 
 OBJ			=	$(SRC:%.c=$(OBJ_DIR)/%.o)

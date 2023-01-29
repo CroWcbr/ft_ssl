@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 20:12:37 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/01/29 01:09:28 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/01/29 03:58:29 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 # include "../libft/include/libft.h"
 # include <stdint.h>
 
-#define ROTRIGHT(a,b)	(((a) >> (b)) | ((a) << (32-(b))))
-#define CH(x,y,z)		(((x) & (y)) ^ (~(x) & (z)))
-#define MAJ(x,y,z)		(((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))
-#define EP0(x)			(ROTRIGHT(x,2) ^ ROTRIGHT(x,13) ^ ROTRIGHT(x,22))
-#define EP1(x)			(ROTRIGHT(x,6) ^ ROTRIGHT(x,11) ^ ROTRIGHT(x,25))
-#define SIG0(x)			(ROTRIGHT(x,7) ^ ROTRIGHT(x,18) ^ ((x) >> 3))
-#define SIG1(x)			(ROTRIGHT(x,17) ^ ROTRIGHT(x,19) ^ ((x) >> 10))
+// #define ROTRIGHT(a,b)	(((a) >> (b)) | ((a) << (32-(b))))
+// #define CH(x,y,z)		(((x) & (y)) ^ (~(x) & (z)))
+// #define MAJ(x,y,z)		(((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))
+// #define EP0(x)			(ROTRIGHT(x,2) ^ ROTRIGHT(x,13) ^ ROTRIGHT(x,22))
+// #define EP1(x)			(ROTRIGHT(x,6) ^ ROTRIGHT(x,11) ^ ROTRIGHT(x,25))
+// #define SIG0(x)			(ROTRIGHT(x,7) ^ ROTRIGHT(x,18) ^ ((x) >> 3))
+// #define SIG1(x)			(ROTRIGHT(x,17) ^ ROTRIGHT(x,19) ^ ((x) >> 10))
 
 # define A	0
 # define B	1
@@ -66,5 +66,12 @@ typedef struct s_sha256
 void		sha256_algorithm(const uint8_t *str, \
 							uint32_t *md_buf, uint32_t *md_tmp);
 void		ft_err(char *str);
+
+uint32_t	sha256_ch(uint32_t x, uint32_t y, uint32_t z);
+uint32_t	sha256_maj(uint32_t x, uint32_t y, uint32_t z);
+uint32_t	sha256_op_ep0(uint32_t x);
+uint32_t	sha256_op_ep1(uint32_t x);
+uint32_t	sha256_op_sig0(uint32_t x);
+uint32_t	sha256_op_sig1(uint32_t x);
 
 #endif

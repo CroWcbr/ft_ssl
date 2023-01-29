@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 22:37:14 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/01/29 01:44:13 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/01/29 03:56:40 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,15 @@ uint8_t	*sha256_main(const char *str, const uint64_t len)
 	sha_update(&sha);
 	sha_final(&sha);
 	i = -1;
-	while (++i < 8)
+	while (++i < 4)
 	{
 		sha.result[i] = (sha.sha_buf[0] >> (24 - i * 8)) & 0x000000ff;
-		sha.result[i + 4] = (sha.sha_buf[1] >> (24 - i * 8)) & 0x000000ff;
-		sha.result[i + 8] = (sha.sha_buf[2] >> (24 - i * 8)) & 0x000000ff;
-		sha.result[i + 12] = (sha.sha_buf[3] >> (24 - i * 8)) & 0x000000ff;
-		sha.result[i + 16] = (sha.sha_buf[4] >> (24 - i * 8)) & 0x000000ff;
-		sha.result[i + 20] = (sha.sha_buf[5] >> (24 - i * 8)) & 0x000000ff;
-		sha.result[i + 24] = (sha.sha_buf[6] >> (24 - i * 8)) & 0x000000ff;
+		sha.result[i + 4] = (sha.sha_buf[2] >> (24 - i * 8)) & 0x000000ff;
+		sha.result[i + 8] = (sha.sha_buf[3] >> (24 - i * 8)) & 0x000000ff;
+		sha.result[i + 12] = (sha.sha_buf[4] >> (24 - i * 8)) & 0x000000ff;
+		sha.result[i + 16] = (sha.sha_buf[5] >> (24 - i * 8)) & 0x000000ff;
+		sha.result[i + 20] = (sha.sha_buf[6] >> (24 - i * 8)) & 0x000000ff;
+		sha.result[i + 24] = (sha.sha_buf[7] >> (24 - i * 8)) & 0x000000ff;
 		sha.result[i + 28] = (sha.sha_buf[7] >> (24 - i * 8)) & 0x000000ff;
 	}
 	return (sha.result);
