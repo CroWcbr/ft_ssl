@@ -6,7 +6,8 @@ my PC has LITTLE-endian format
 - in shaXXX - move bits
 
 ## Progress
-- md5 finished
-- sha256 finished
-- sha512 finished
-- whirlpool in progress
+- md5 - finished
+- sha256 - finished
+- sha512 - finished
+- whirlpool - in progress
+- print hash result with flag - in progress
