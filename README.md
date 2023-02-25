@@ -2,12 +2,9 @@
 
 my PC has LITTLE-endian format
 
-- in md5 - just append
-- in shaXXX - move bits
-
 ## Progress
 - md5 - finished
 - sha256 - finished
 - sha512 - finished
-- whirlpool - in progress
-- print hash result with flag - in progress
+- whirlpool - nearly finished (don't upload yet)
+- print hash result with flag - in progress (just design)
