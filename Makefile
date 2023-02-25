@@ -1,7 +1,7 @@
 NAME		=	ft_ssl
 
 CC			=	gcc
-FLAGS		=	-Wall -Wextra -Werror
+FLAGS		=	#-Wall -Wextra -Werror
 
 INCLUDE		= 	include/
 LIBFT_DIR	=	./libft
@@ -26,7 +26,8 @@ SRC			=	ft_ssl.c \
 				sha512/sha512_algorithm.c \
 				sha512/sha512_utily.c \
 				sha512/sha512_utily2.c \
-				whirlpool/whirlpool.c
+				whirlpool/whirlpool.c \
+				whirlpool/whirlpool_algorithm.c
 
 OBJ			=	$(SRC:%.c=$(OBJ_DIR)/%.o)
 
