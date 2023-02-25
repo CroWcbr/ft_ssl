@@ -6,13 +6,28 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 17:23:27 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/01/29 04:07:21 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/02/25 21:16:47 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/sha512.h"
 
-static void	sha512_find_w(uint64_t *w, const uint8_t *str)
+#include <stdio.h>
+
+static void	print_hash(uint8_t *hash, uint32_t len)
+{
+	uint32_t	i;
+
+	if (hash)
+	{
+		i = -1;
+		while (++i < len)
+			printf("%02x ", hash[i]);
+		printf("\n");
+	}
+}
+
+static void	sha512_find_w(uint64_t *w, const uint64_t *str)
 {
 	uint32_t	i;
 	uint32_t	j;
@@ -21,15 +36,14 @@ static void	sha512_find_w(uint64_t *w, const uint8_t *str)
 	j = 0;
 	while (i < 16)
 	{
-		w[i] = (str[j + 7] | \
-				str[j + 6] << 8 | \
-				str[j + 5] << 16 | \
-				str[j + 4] << 24) | \
-				((uint64_t)(str[j + 3] | \
-							str[j + 2] << 8 | \
-							str[j + 1] << 16 | \
-							str[j] << 24) \
-					<< 32);
+		w[i] = ((((str[i]) & 0xff00000000000000ull) >> 56) | \
+			(((str[i]) & 0x00ff000000000000ull) >> 40) | \
+			(((str[i]) & 0x0000ff0000000000ull) >> 24) | \
+			(((str[i]) & 0x000000ff00000000ull) >> 8) | \
+			(((str[i]) & 0x00000000ff000000ull) << 8) | \
+			(((str[i]) & 0x0000000000ff0000ull) << 24) | \
+			(((str[i]) & 0x000000000000ff00ull) << 40) | \
+			(((str[i]) & 0x00000000000000ffull) << 56));
 		i++;
 		j += 8;
 	}
@@ -72,7 +86,7 @@ void	sha512_algorithm(const uint8_t *str, \
 	uint64_t	w[80];
 	uint32_t	i;
 
-	sha512_find_w(w, str);
+	sha512_find_w(w, (uint64_t *)str);
 	i = -1;
 	while (++i < 8)
 		sha_tmp[i] = sha_buf[i];
