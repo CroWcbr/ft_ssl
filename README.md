@@ -2,6 +2,9 @@
 
 my PC has LITTLE-endian format
 
+## Tester
+- Tester located ./src/tester
+
 ## Progress
 - md5 - finished
 - sha256 - finished
