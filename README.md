@@ -6,5 +6,8 @@ my PC has LITTLE-endian format
 - md5 - finished
 - sha256 - finished
 - sha512 - finished
-- whirlpool - nearly finished (don't upload yet)
+- whirlpool - finished
+
+## NOW
+- some mistake in bonus (Ctrl +D - segmentation???)
 - print hash result with flag - in progress (just design)

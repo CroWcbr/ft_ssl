@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tester.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/27 17:44:09 by cdarrell          #+#    #+#             */
+/*   Updated: 2023/02/27 17:51:59 by cdarrell         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -13,25 +25,28 @@ uint8_t		*sha256_main(const char *str, const uint64_t len);
 uint8_t		*sha512_main(const char *str, const uint64_t len);
 uint8_t		*whirlpool(const char *str, const uint64_t len);
 
-static unsigned char *WHIRLPOOL_EDIT(const unsigned char *str, size_t len,  unsigned char *str_openssl)
+static unsigned char	*wh_openssl(const unsigned char *str, \
+									size_t len, \
+									unsigned char *str_openssl)
 {
-	return WHIRLPOOL(str, strlen(str), str_openssl);
+	return (WHIRLPOOL(str, strlen(str), str_openssl));
 }
 
 static void	tester(char *hash, int hash_len, int test, int print, \
-					unsigned char * (*openssl_hash)(const unsigned char *, size_t,  unsigned char *), \
-					uint8_t* (*my_hash)(const char *, const uint64_t))
+					unsigned char *(*openssl_hash)(const unsigned char *, size_t, unsigned char *), \
+					uint8_t *(*my_hash)(const char *, const uint64_t))
 {
-	int			err = 0;
+	int			err;
 	char		str[test];
 	uint8_t		str_openssl[hash_len];
 	uint8_t		*str_my;
 
+	err = 0;
 	for (int i = 0; i <= test; i++)
 		str[i] = 0;
 	for (int i = 0; i < test; i++)
 	{
-		char random = rand() % 94 + 32;
+		char	random = rand() % 94 + 32;
 		str[i] = random;
 		openssl_hash(str, strlen(str), str_openssl);
 		str_my = my_hash(str, strlen(str));
@@ -41,12 +56,12 @@ static void	tester(char *hash, int hash_len, int test, int print, \
 			printf("%d\t|%s|\n", i, str);
 
 			printf("MD5 openssl: \t");
-			for(int i = 0; i < hash_len; i++)
+			for (int i = 0; i < hash_len; i++)
 				printf("%02x", str_openssl[i]);
 			printf("\n");
 
 			printf("MD5 my func: \t");
-			for(int i = 0; i < hash_len; i++)
+			for (int i = 0; i < hash_len; i++)
 				printf("%02x", str_my[i]);
 			printf("\n");
 		}
@@ -55,7 +70,7 @@ static void	tester(char *hash, int hash_len, int test, int print, \
 			{
 				err++;
 				if (print == 0)
-					break;
+					break ;
 				else
 					exit(0);
 			}
@@ -67,22 +82,23 @@ static void	tester(char *hash, int hash_len, int test, int print, \
 }
 
 static void	tester_full_random(char *hash, int hash_len, int test, int str_len_test, int print, \
-					unsigned char * (*openssl_hash)(const unsigned char *, size_t,  unsigned char *), \
-					uint8_t* (*my_hash)(const char *, const uint64_t))
+					unsigned char *(*openssl_hash)(const unsigned char *, size_t, unsigned char *), \
+					uint8_t *(*my_hash)(const char *, const uint64_t))
 {
-	int			err = 0;
+	int			err;
 	char		*str;
 	uint8_t		str_openssl[hash_len];
 	uint8_t		*str_my;
 
+	err = 0;
 	for (int i = 0; i < test; i++)
 	{
-		int random = rand() % str_len_test;
-		str = (char*)malloc((random + 1)*sizeof(char));
+		int	random = rand() % str_len_test;
+		str = (char *)malloc((random + 1) * sizeof(char));
 		str[random] = 0;
 		for (int j = 0; j < random; j++)
 		{
-			char random_char = rand() % 94 + 32;
+			char	random_char = rand() % 94 + 32;
 			str[j] = random_char;
 		}
 
@@ -91,12 +107,12 @@ static void	tester_full_random(char *hash, int hash_len, int test, int str_len_t
 		if (print == 1)
 		{
 			printf("MD5 openssl: \t");
-			for(int i = 0; i < hash_len; i++)
+			for (int i = 0; i < hash_len; i++)
 				printf("%02x", str_openssl[i]);
 			printf("\n");
 
 			printf("MD5 my func: \t");
-			for(int i = 0; i < hash_len; i++)
+			for (int i = 0; i < hash_len; i++)
 				printf("%02x", str_my[i]);
 			printf("\n");
 		}
@@ -120,21 +136,31 @@ static void	tester_full_random(char *hash, int hash_len, int test, int str_len_t
 	printf("-------------------------------------\n");
 }
 
-int main()
+int	main(void)
 {
-	int test = 100;
-	int str_len_test = 100000;
-	int print = 0;
+	int	test;
+	int	str_len_test;
+	int	print;
+
+	test = 100;
+	str_len_test = 100000;
+	print = 0;
 	srand(time(NULL));
-	tester("md5", MD5_DIGEST_LENGTH, test, print, MD5, md5_main);
-	tester("sha256", SHA256_DIGEST_LENGTH, test, print, SHA256, sha256_main);
-	tester("sha512", SHA512_DIGEST_LENGTH, test, print, SHA512, sha512_main);
-	tester("whirlpool", WHIRLPOOL_DIGEST_LENGTH, test, print, WHIRLPOOL_EDIT, whirlpool);
-
-	tester_full_random("md5", MD5_DIGEST_LENGTH, test, str_len_test, print, MD5, md5_main);
-	tester_full_random("sha256", SHA256_DIGEST_LENGTH, test, str_len_test, print, SHA256, sha256_main);
-	tester_full_random("sha512", SHA512_DIGEST_LENGTH, test, str_len_test, print, SHA512, sha512_main);
-	tester_full_random("whirlpool", WHIRLPOOL_DIGEST_LENGTH, test, str_len_test, print, WHIRLPOOL_EDIT, whirlpool);
-
+	tester("md5", MD5_DIGEST_LENGTH, \
+			test, print, MD5, md5_main);
+	tester("sha256", SHA256_DIGEST_LENGTH, \
+			test, print, SHA256, sha256_main);
+	tester("sha512", SHA512_DIGEST_LENGTH, \
+			test, print, SHA512, sha512_main);
+	tester("whirlpool", WHIRLPOOL_DIGEST_LENGTH, \
+			test, print, wh_openssl, whirlpool);
+	tester_full_random("md5", MD5_DIGEST_LENGTH, \
+						test, str_len_test, print, MD5, md5_main);
+	tester_full_random("sha256", SHA256_DIGEST_LENGTH, \
+						test, str_len_test, print, SHA256, sha256_main);
+	tester_full_random("sha512", SHA512_DIGEST_LENGTH, \
+						test, str_len_test, print, SHA512, sha512_main);
+	tester_full_random("whirlpool", WHIRLPOOL_DIGEST_LENGTH, \
+						test, str_len_test, print, wh_openssl, whirlpool);
 	return (0);
 }

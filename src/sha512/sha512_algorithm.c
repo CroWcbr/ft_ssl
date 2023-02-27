@@ -6,26 +6,11 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 17:23:27 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/02/25 21:16:47 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:55:53 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/sha512.h"
-
-#include <stdio.h>
-
-static void	print_hash(uint8_t *hash, uint32_t len)
-{
-	uint32_t	i;
-
-	if (hash)
-	{
-		i = -1;
-		while (++i < len)
-			printf("%02x ", hash[i]);
-		printf("\n");
-	}
-}
 
 static void	sha512_find_w(uint64_t *w, const uint64_t *str)
 {

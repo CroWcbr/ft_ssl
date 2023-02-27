@@ -23,7 +23,8 @@ SRC			=	tester/tester.c \
 				sha512/sha512_utily.c \
 				sha512/sha512_utily2.c \
 				whirlpool/whirlpool.c \
-				whirlpool/whirlpool_algorithm.c
+				whirlpool/whirlpool_algorithm.c \
+				whirlpool/whirlpool_utily.c
 
 OBJ			=	$(SRC:%.c=$(OBJ_DIR)/%.o)
 
