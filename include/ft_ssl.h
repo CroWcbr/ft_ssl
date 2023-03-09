@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:53:49 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/02/25 21:19:06 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/03/10 01:03:52 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 # define FT_SSL_H
 
 # include <stdio.h>
-
 # include <stdint.h>
 # include "../libft/include/libft.h"
+
+# define IS_DEBUG 1
 
 typedef enum s_bool
 {
@@ -60,5 +61,7 @@ uint8_t		*md5_main(const char *str, const uint64_t len);
 uint8_t		*sha256_main(const char *str, const uint64_t len);
 uint8_t		*sha512_main(const char *str, const uint64_t len);
 uint8_t		*whirlpool(const char *str, const uint64_t len);
+
+void		print_hash(t_ssl *ssl, t_hash *hash, uint8_t *result);
 
 #endif

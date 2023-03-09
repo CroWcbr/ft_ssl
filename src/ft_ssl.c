@@ -6,24 +6,13 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:43:49 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/02/25 00:50:43 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/03/10 01:03:10 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ssl.h"
 
-static void	print_hash(uint8_t *hash, uint32_t len)
-{
-	uint32_t	i;
-
-	if (hash)
-	{
-		i = -1;
-		while (++i < len)
-			printf("%02x", hash[i]);
-		printf("\n");
-	}
-}
+t_bool is_debug = false;
 
 static void	mandatory_part(char **argv)
 {
@@ -35,7 +24,8 @@ static void	mandatory_part(char **argv)
 	ssl = parse(argv);
 	if (!ssl)
 		return ;
-	parse_print(ssl);
+	if (IS_DEBUG)
+		parse_print(ssl);
 	tmp = ssl->hash_list;
 	while (tmp)
 	{
@@ -44,9 +34,9 @@ static void	mandatory_part(char **argv)
 			result = ssl->hash_func(hash->name, ft_strlen(hash->name));
 		else
 			result = read_file(ssl->hash_func, hash);
+		print_hash(ssl, hash, result);
 		free(hash->name);
 		tmp = tmp->next;
-		print_hash(result, ssl->crypt_len);
 		free(result);
 	}
 	ft_lstclear(&ssl->hash_list, free);

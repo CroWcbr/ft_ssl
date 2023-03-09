@@ -1,7 +1,7 @@
 NAME		=	ft_ssl
 
 CC			=	gcc
-FLAGS		=	#-Wall -Wextra -Werror
+FLAGS		=	-Wall -Wextra -Werror
 
 INCLUDE		= 	include/
 LIBFT_DIR	=	./libft
@@ -13,6 +13,7 @@ LIBFT_LIB	=	libft.a
 SRC			=	ft_ssl.c \
 				ft_ssl_read_hash_file.c \
 				ft_ssl_help.c \
+				ft_ssl_print.c \
 				parsing/parsing.c \
 				parsing/parsing_argv.c \
 				parsing/parsing_print.c \

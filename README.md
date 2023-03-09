@@ -12,5 +12,4 @@ my PC has LITTLE-endian format
 - whirlpool - finished
 
 ## NOW
-- some mistake in bonus (Ctrl +D - segmentation???)
-- print hash result with flag - in progress (just design)
+- ft_ssl_print.c to norminette and check =)
