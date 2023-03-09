@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:49:28 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/03/10 01:34:29 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/03/10 01:54:54 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,21 @@
 
 void	print_hash(t_ssl *ssl, t_hash *hash, uint8_t *result)
 {
-	uint32_t	i;
+	size_t	i;
 	int flag = 0;
+
+
 
 	if (!result)
 		return ;
+
+	char *tmp = ft_strdup(ssl->hash);
+	i = 0;
+	while (i < ft_strlen(tmp))
+	{
+		tmp[i] = ft_toupper(tmp[i]);
+		i++;
+	}
 
 	if (ssl->q && ssl->p)
 	{
@@ -35,12 +45,12 @@ void	print_hash(t_ssl *ssl, t_hash *hash, uint8_t *result)
 		flag = 1;
 	}
 	else if (hash->type == 0 && ft_lstsize(ssl->hash_list) == 1 && ssl->s == 0)
-		printf("MD5(stdin)= ");
+		printf("%s(stdin)= ", tmp);
 	else if (hash->type == 1 && ssl->r == 0)
-		printf("MD5 (%s) = ", hash->name);
+		printf("%s (%s) = ", tmp, hash->name);
 	else if (hash->type == 0 && ssl->s == 1 && ssl->p == 0 && ssl->r == 0)
 	{
-		printf("MD5 (\"%s\") = ", hash->name);
+		printf("%s (\"%s\") = ", tmp, hash->name);
 		ssl->s = 0;
 	}
 
