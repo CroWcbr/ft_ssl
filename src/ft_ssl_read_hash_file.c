@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 23:24:13 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/01/29 01:56:40 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/03/11 02:53:54 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*read_to_str(int fd, uint64_t *len)
 }
 
 uint8_t	*read_file(uint8_t *(*hash_func)(const char *str, const uint64_t len), \
-						t_hash *hash)
+						t_hash *hash, char *hash_type)
 {
 	char		*str_file;
 	uint64_t	len;
@@ -61,7 +61,12 @@ uint8_t	*read_file(uint8_t *(*hash_func)(const char *str, const uint64_t len), \
 	fd = open(hash->name, O_RDONLY);
 	if (fd < 0)
 	{
-		ft_putstr("No file\n");
+// ft_ssl: md5: bar: No such file or directory
+		ft_putstr("ft_ssl: ");
+		ft_putstr(hash_type);
+		ft_putstr(": ");
+		ft_putstr(hash->name);
+		ft_putstr(": No such file or directory\n");
 		return (NULL);
 	}
 	len = 0;

@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:43:49 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/03/10 01:03:10 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/03/11 02:53:05 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	mandatory_part(char **argv)
 		if (hash->type == false)
 			result = ssl->hash_func(hash->name, ft_strlen(hash->name));
 		else
-			result = read_file(ssl->hash_func, hash);
+			result = read_file(ssl->hash_func, hash, ssl->hash);
 		print_hash(ssl, hash, result);
 		free(hash->name);
 		tmp = tmp->next;
