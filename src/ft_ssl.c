@@ -6,13 +6,11 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:43:49 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/03/11 02:53:05 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/03/12 01:36:32 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ssl.h"
-
-t_bool is_debug = false;
 
 static void	mandatory_part(char **argv)
 {

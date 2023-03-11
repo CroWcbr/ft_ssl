@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 23:24:13 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/03/11 02:53:54 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/03/12 01:35:28 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ uint8_t	*read_file(uint8_t *(*hash_func)(const char *str, const uint64_t len), \
 	fd = open(hash->name, O_RDONLY);
 	if (fd < 0)
 	{
-// ft_ssl: md5: bar: No such file or directory
 		ft_putstr("ft_ssl: ");
 		ft_putstr(hash_type);
 		ft_putstr(": ");
