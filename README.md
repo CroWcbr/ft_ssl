@@ -12,4 +12,4 @@ my PC has LITTLE-endian format
 - whirlpool - finished
 
 ## NOW
-- ft_ssl_print.c to norminette and check =)
+- change printf to ft_putstr or connect my printf =)
