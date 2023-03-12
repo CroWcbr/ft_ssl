@@ -10,6 +10,3 @@ my PC has LITTLE-endian format
 - sha256 - finished
 - sha512 - finished
 - whirlpool - finished
-
-## NOW
-- change printf to ft_putstr or connect my printf =)

@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:49:28 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/03/12 01:39:47 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/03/13 00:32:33 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,30 @@
 
 static void	pre_print_hash(t_ssl *ssl, t_hash *hash)
 {
-	if (ssl->q && ssl->p)
-		printf("%s", hash->name);
-	else if (ssl->q == 0 && hash->type == 0 && ssl->p == 1)
-		printf("(\"%.*s\")= ", (int)(ft_strlen(hash->name) - 1), hash->name);
+	if (ssl->q == 0 && hash->type == 0 && ssl->p == 1)
+	{
+		ft_putstr("(\"");
+		write(STDOUT_FILENO, hash->name, ft_strlen(hash->name) - 1);
+		ft_putstr("\")= ");
+	}
 	else if (ssl->q == 0 && hash->type == 0 && \
 			ft_lstsize(ssl->hash_list) == 1 && ssl->s == 0)
-		printf("(stdin)= ");
-	else if (ssl->q == 0 && hash->type == 1 && ssl->r == 0)
-		printf("%s (%s) = ", ssl->hash, hash->name);
+		ft_putstr("(stdin)= ");
 	else if (ssl->q == 0 && hash->type == 0 && \
-			ssl->s == 1 && ssl->p == 0 && ssl->r == 0)
+			ssl->s == 1 && ssl->r == 0)
 	{
-		printf("%s (\"%s\") = ", ssl->hash, hash->name);
+		ft_putstr(ssl->hash_to_upper);
+		ft_putstr(" (\"");
+		ft_putstr(hash->name);
+		ft_putstr("\") = ");
 		ssl->s = 0;
+	}
+	else if (ssl->q == 0 && hash->type == 1 && ssl->r == 0)
+	{
+		ft_putstr(ssl->hash_to_upper);
+		ft_putstr(" (");
+		ft_putstr(hash->name);
+		ft_putstr(") = ");
 	}
 }
 
@@ -36,26 +46,50 @@ static void	after_print_hash(t_ssl *ssl, t_hash *hash)
 	if (ssl->r == 1 && ssl->q == 0 && ssl->p == 0)
 	{
 		if (ssl->s == 0)
-			printf(" %s", hash->name);
+		{
+			ft_putstr(" ");
+			ft_putstr(hash->name);
+		}
 		else
 		{
-			printf(" \"%s\"", hash->name);
+			ft_putstr(" \"");
+			ft_putstr(hash->name);
+			ft_putstr("\"");
 			ssl->s = 0;
 		}
 	}
 	ssl->p = 0;
-	printf("\n");
+	ft_putstr("\n");
+}
+
+static void	hex_print_hash(uint8_t *result, int len)
+{
+	char	buf[3];
+	int		i;
+
+	i = -1;
+	buf[2] = '\0';
+	i = -1;
+	while (++i < len)
+	{
+		buf[0] = (result[i] >> 4) + '0';
+		buf[1] = (result[i] & 0x0f) + '0';
+		if (buf[0] > '9')
+			buf[0] += 39;
+		if (buf[1] > '9')
+			buf[1] += 39;
+		ft_putstr(buf);
+	}
 }
 
 void	print_hash(t_ssl *ssl, t_hash *hash, uint8_t *result)
 {
-	size_t	i;
-
 	if (!result)
 		return ;
-	pre_print_hash(ssl, hash);
-	i = 0;
-	while (i < ssl->crypt_len)
-		printf("%02x", result[i++]);
+	if (ssl->q == 1 && ssl->p == 1)
+		ft_putstr(hash->name);
+	else
+		pre_print_hash(ssl, hash);
+	hex_print_hash(result, ssl->crypt_len);
 	after_print_hash(ssl, hash);
 }

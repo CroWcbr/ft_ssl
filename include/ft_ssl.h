@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:53:49 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/03/11 02:53:57 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/03/13 00:24:38 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef enum s_bool
 typedef struct s_ssl
 {
 	char			*hash;
+	char			*hash_to_upper;
 	uint32_t		crypt_len;
 	uint8_t			*(*hash_func)(const char *str, const uint64_t len);
 	t_bool			p;

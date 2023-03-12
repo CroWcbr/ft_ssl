@@ -6,11 +6,39 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:43:49 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/03/12 01:36:32 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/03/13 00:57:36 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ssl.h"
+#include <signal.h>
+
+static char	*g_line;
+
+void	_signal_handler(int signal)
+{
+	ft_putstr("\rSTOP SIGNAL");
+	if (signal == -1)
+		ft_putstr(" Ctrl + D ");
+	else if (signal == 2)
+		ft_putstr(" Ctrl + C ");
+	else if (signal == 3)
+		ft_putstr(" Ctrl + / ");
+	else if (signal == 20)
+		ft_putstr(" Ctrl + Z ");
+	else
+		ft_putstr(" Unknown signal ");
+	ft_putstr("from user");
+	free(g_line);
+	exit(signal);
+}
+
+static void	free_ssl(t_ssl	*ssl)
+{
+	ft_lstclear(&ssl->hash_list, free);
+	free(ssl->hash_to_upper);
+	free(ssl);
+}
 
 static void	mandatory_part(char **argv)
 {
@@ -37,24 +65,25 @@ static void	mandatory_part(char **argv)
 		tmp = tmp->next;
 		free(result);
 	}
-	ft_lstclear(&ssl->hash_list, free);
-	free(ssl);
+	free_ssl(ssl);
 }
 
 static void	work_like_openssl(void)
 {
 	int		r;
-	char	*line;
 	char	**argv;
 
+	signal(SIGINT, _signal_handler);
+	signal(SIGQUIT, _signal_handler);
+	signal(SIGTSTP, _signal_handler);
 	while (1)
 	{
 		ft_putstr("OPENSSL > ");
-		r = gnl(0, &line);
-		if (line[0] != '\0' && line)
+		r = gnl(0, &g_line);
+		if (g_line && g_line[0] != '\0')
 		{
-			argv = ft_split(line, ' ');
-			free(line);
+			argv = ft_split(g_line, ' ');
+			free(g_line);
 			mandatory_part(argv);
 			ft_free_split(argv);
 		}

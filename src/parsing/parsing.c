@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:43:45 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/03/11 02:55:41 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/03/13 00:32:14 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,21 @@ static void	init_ssl_hash_function(t_ssl *ssl)
 static t_ssl	*init_ssl(char *hash_alg)
 {	
 	t_ssl	*ssl;
+	size_t	i;
 
 	ssl = malloc(sizeof(t_ssl));
 	if (!ssl)
 		ft_err("Error malloc: parsing.c - init_ssl - ssl");
 	ssl->hash = hash_alg;
+	ssl->hash_to_upper = ft_strdup(ssl->hash);
+	if (!ssl->hash_to_upper)
+		ft_err("Error malloc: parsing.c - init_ssl - hash_to_uppe");
+	i = 0;
+	while (i < ft_strlen(ssl->hash_to_upper))
+	{
+		ssl->hash_to_upper[i] = ft_toupper(ssl->hash_to_upper[i]);
+		i++;
+	}
 	init_ssl_hash_function(ssl);
 	ssl->p = false;
 	ssl->q = false;
