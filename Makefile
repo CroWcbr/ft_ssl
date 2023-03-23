@@ -1,7 +1,7 @@
 NAME		=	ft_ssl
 
 CC			=	gcc
-FLAGS		=	#-Wall -Wextra -Werror
+FLAGS		=	-Wall -Wextra -Werror
 
 INCLUDE		= 	include/
 LIBFT_DIR	=	./libft
