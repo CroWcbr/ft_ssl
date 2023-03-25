@@ -6,11 +6,11 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 03:14:39 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/01/29 04:06:18 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/03/25 16:59:28 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/sha256.h"
+#include "../../include/sha512.h"
 // #define ROTRIGHT(a,b) (((a) >> (b)) | ((a) << (64-(b))))
 // #define EP0(x) (ROTRIGHT(x,28) ^ ROTRIGHT(x,34) ^ ROTRIGHT(x,39))
 // #define EP1(x) (ROTRIGHT(x,14) ^ ROTRIGHT(x,18) ^ ROTRIGHT(x,41))

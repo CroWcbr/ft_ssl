@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:43:45 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/03/13 00:32:14 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/03/25 15:00:11 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ t_ssl	*parse(char **argv)
 	ssl = init_ssl(argv[0]);
 	if (!parse_argv(argv + 1, ssl))
 	{
+		free(ssl->hash_to_upper);
 		free(ssl);
 		return (NULL);
 	}

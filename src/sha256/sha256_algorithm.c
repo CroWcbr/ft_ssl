@@ -6,11 +6,11 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 20:23:42 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/01/29 03:59:18 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/03/25 16:59:18 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sha256.h"
+#include "../../include/sha256.h"
 
 static void	sha256_find_w(uint32_t *w, const uint8_t *str)
 {
