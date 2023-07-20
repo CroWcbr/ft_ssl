@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:43:45 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/03/25 15:00:11 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/07/21 00:43:44 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 static int	check_usage(char *argv)
 {
 	if (ft_strcmp(argv, "md5") && \
+			ft_strcmp(argv, "sha224") && \
 			ft_strcmp(argv, "sha256") && \
+			ft_strcmp(argv, "sha256d") && \
+			ft_strcmp(argv, "sha384") && \
 			ft_strcmp(argv, "sha512") && \
 			ft_strcmp(argv, "whirlpool"))
 	{
@@ -25,7 +28,10 @@ static int	check_usage(char *argv)
 		ft_putstr("\n");
 		ft_putstr("Commands:\n");
 		ft_putstr("md5\n");
+		ft_putstr("sha224\n");
 		ft_putstr("sha256\n");
+		ft_putstr("sha256d\n");
+		ft_putstr("sha384\n");
 		ft_putstr("sha512\n");
 		ft_putstr("whirlpool\n");
 		ft_putstr("\n");
@@ -44,10 +50,25 @@ static void	init_ssl_hash_function(t_ssl *ssl)
 		ssl->hash_func = &md5_main;
 		ssl->crypt_len = 16;
 	}
+	else if (!ft_strcmp(ssl->hash, "sha224"))
+	{
+		ssl->hash_func = &sha224_main;
+		ssl->crypt_len = 28;
+	}
 	else if (!ft_strcmp(ssl->hash, "sha256"))
 	{
 		ssl->hash_func = &sha256_main;
 		ssl->crypt_len = 32;
+	}
+	else if (!ft_strcmp(ssl->hash, "sha256d"))
+	{
+		ssl->hash_func = &sha256d_main;
+		ssl->crypt_len = 32;
+	}
+	else if (!ft_strcmp(ssl->hash, "sha384"))
+	{
+		ssl->hash_func = &sha384_main;
+		ssl->crypt_len = 48;
 	}
 	else if (!ft_strcmp(ssl->hash, "sha512"))
 	{

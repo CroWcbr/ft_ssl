@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 22:37:14 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/01/29 01:44:43 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/07/21 00:05:59 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,51 @@ uint8_t	*sha512_main(const char *str, const uint64_t len)
 		sha.result[i + 56] = (sha.sha_buf[7] >> (56 - i * 8)) & 0x000000ff;
 	}
 	return (sha.result);
+}
+
+static void	sha_init384(t_sha512 *sha, const char *str, const uint64_t *len)
+{
+	sha->str = (uint8_t *)str;
+	sha->len = *len;
+	sha->pos = 0;
+	sha->len_64_bit = sha->len * 8;
+	sha->sha_buf[A] = 0xcbbb9d5dc1059ed8;
+	sha->sha_buf[B] = 0x629a292a367cd507;
+	sha->sha_buf[C] = 0x9159015a3070dd17;
+	sha->sha_buf[D] = 0x152fecd8f70e5939;
+	sha->sha_buf[E] = 0x67332667ffc00b31;
+	sha->sha_buf[F] = 0x8eb44a8768581511;
+	sha->sha_buf[G] = 0xdb0c2e0d64f98fa7;
+	sha->sha_buf[H] = 0x47b5481dbefa4fa4;
+	sha->result = malloc(64);
+	if (!sha->result)
+		ft_err("Error malloc: sha512.c - sha_init - sha->result");
+}
+
+uint8_t	*sha384_main(const char *str, const uint64_t len)
+{
+	t_sha512	sha;
+	int			i;
+
+	sha_init384(&sha, str, &len);
+	sha_update(&sha);
+	sha_final(&sha);
+	i = -1;
+	while (++i < 8)
+	{
+		sha.result[i] = (sha.sha_buf[0] >> (56 - i * 8)) & 0x000000ff;
+		sha.result[i + 8] = (sha.sha_buf[1] >> (56 - i * 8)) & 0x000000ff;
+		sha.result[i + 16] = (sha.sha_buf[2] >> (56 - i * 8)) & 0x000000ff;
+		sha.result[i + 24] = (sha.sha_buf[3] >> (56 - i * 8)) & 0x000000ff;
+		sha.result[i + 32] = (sha.sha_buf[4] >> (56 - i * 8)) & 0x000000ff;
+		sha.result[i + 40] = (sha.sha_buf[5] >> (56 - i * 8)) & 0x000000ff;
+		sha.result[i + 48] = (sha.sha_buf[6] >> (56 - i * 8)) & 0x000000ff;
+		sha.result[i + 56] = (sha.sha_buf[7] >> (56 - i * 8)) & 0x000000ff;
+	}
+	uint8_t *result_384 = malloc(48);
+	if (!result_384)
+		ft_err("Error malloc: sha384.c - sha_init - sha->result");
+	ft_memcpy(result_384, sha.result, 48);
+	free(sha.result);
+	return (result_384);
 }

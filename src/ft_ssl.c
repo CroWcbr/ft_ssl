@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:43:49 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/03/13 00:57:36 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/07/21 00:52:06 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,11 @@ static void	work_like_openssl(void)
 	{
 		ft_putstr("OPENSSL > ");
 		r = gnl(0, &g_line);
+		if (!ft_strcmp(g_line, "exit"))
+		{
+			free(g_line);
+			break ;
+		}
 		if (g_line && g_line[0] != '\0')
 		{
 			argv = ft_split(g_line, ' ');

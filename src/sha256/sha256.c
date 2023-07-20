@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 22:37:14 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/02/25 21:15:58 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/07/21 00:48:22 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,70 @@ uint8_t	*sha256_main(const char *str, const uint64_t len)
 		sha.result[i + 28] = (sha.sha_buf[7] >> (24 - i * 8)) & 0x000000ff;
 	}
 	return (sha.result);
+}
+
+uint8_t	*sha256d_main(const char *str, const uint64_t len)
+{
+	uint8_t	*result = sha256_main(str, len);
+	
+	uint8_t hash[64];
+	for(int i = 0; i < 32; ++i)
+	{
+		hash[i * 2] = (result[i] >> 4) + '0';
+		hash[i*2 + 1] = (result[i] & 0x0f) + '0';
+		if (hash[i * 2] > '9')
+			hash[i * 2] += 39;
+		if (hash[i*2 + 1] > '9')
+			hash[i*2 + 1] += 39;
+	}
+	free(result);
+	uint8_t	*result2 = sha256_main((const char*)hash, 64);
+	return(result2);
+}
+
+static void	sha_init224(t_sha256 *sha, const char *str, const uint64_t *len)
+{
+	sha->str = (uint8_t *)str;
+	sha->len = *len;
+	sha->pos = 0;
+	sha->len_64_bit = sha->len * 8;
+	sha->sha_buf[A] = 0xc1059ed8;
+	sha->sha_buf[B] = 0x367cd507;
+	sha->sha_buf[C] = 0x3070dd17;
+	sha->sha_buf[D] = 0xf70e5939;
+	sha->sha_buf[E] = 0xffc00b31;
+	sha->sha_buf[F] = 0x68581511;
+	sha->sha_buf[G] = 0x64f98fa7;
+	sha->sha_buf[H] = 0xbefa4fa4;
+	sha->result = malloc(32);
+	if (!sha->result)
+		ft_err("Error malloc: sha224.c - sha_init - sha->result");
+}
+
+uint8_t	*sha224_main(const char *str, const uint64_t len)
+{
+	t_sha256	sha;
+	int			i;
+
+	sha_init224(&sha, str, &len);
+	sha_update(&sha);
+	sha_final(&sha);
+	i = -1;
+	while (++i < 4)
+	{
+		sha.result[i] = (sha.sha_buf[0] >> (24 - i * 8)) & 0x000000ff;
+		sha.result[i + 4] = (sha.sha_buf[1] >> (24 - i * 8)) & 0x000000ff;
+		sha.result[i + 8] = (sha.sha_buf[2] >> (24 - i * 8)) & 0x000000ff;
+		sha.result[i + 12] = (sha.sha_buf[3] >> (24 - i * 8)) & 0x000000ff;
+		sha.result[i + 16] = (sha.sha_buf[4] >> (24 - i * 8)) & 0x000000ff;
+		sha.result[i + 20] = (sha.sha_buf[5] >> (24 - i * 8)) & 0x000000ff;
+		sha.result[i + 24] = (sha.sha_buf[6] >> (24 - i * 8)) & 0x000000ff;
+		sha.result[i + 28] = (sha.sha_buf[7] >> (24 - i * 8)) & 0x000000ff;
+	}
+	uint8_t *result_224 = malloc(28);
+	if (!result_224)
+		ft_err("Error malloc: sha224.c - sha_init - sha->result");
+	ft_memcpy(result_224, sha.result, 28);
+	free(sha.result);
+	return (result_224);
 }
