@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:53:49 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/07/21 00:42:37 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/07/25 09:02:00 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdint.h>
 # include "../libft/include/libft.h"
 
-# define IS_DEBUG 1
+# define IS_DEBUG 0
 
 typedef enum s_bool
 {

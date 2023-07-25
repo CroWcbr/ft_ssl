@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:49:28 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/07/21 01:57:19 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/07/25 09:07:50 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,14 @@
 
 static void	pre_print_hash(t_ssl *ssl, t_hash *hash)
 {
-	if (ssl->q == 0 && hash->type == 0 && ssl->p == 1)
+	if (ssl->q == 0 && ssl->p == 0 && ssl->r == 0 && ssl->s == 0)
+	{
+		ft_putstr(ssl->hash_to_upper);
+		ft_putstr("(");
+		hash->type ? ft_putstr(hash->name) : ft_putstr("stdin");
+		ft_putstr(")= ");
+	}
+	else if (ssl->q == 0 && hash->type == 0 && ssl->p == 1)
 	{
 		ft_putstr("(\"");
 		write(STDOUT_FILENO, hash->name, ft_strlen(hash->name) - 1);
@@ -22,7 +29,9 @@ static void	pre_print_hash(t_ssl *ssl, t_hash *hash)
 	}
 	else if (ssl->q == 0 && hash->type == 0 && \
 			ft_lstsize(ssl->hash_list) == 1 && ssl->s == 0 && ssl->r == 0)
+	{
 		ft_putstr("(stdin)= ");
+	}
 	else if (ssl->q == 0 && hash->type == 0 && \
 			ssl->s == 1 && ssl->r == 0)
 	{
@@ -32,13 +41,6 @@ static void	pre_print_hash(t_ssl *ssl, t_hash *hash)
 		ft_putstr("\") = ");
 		ssl->s = 0;
 	}
-	else if (ssl->q == 0 && hash->type == 1 && ssl->r == 0)
-	{
-		ft_putstr(ssl->hash_to_upper);
-		ft_putstr(" (");
-		ft_putstr(hash->name);
-		ft_putstr(") = ");
-	}
 }
 
 static void	after_print_hash(t_ssl *ssl, t_hash *hash)
@@ -47,8 +49,8 @@ static void	after_print_hash(t_ssl *ssl, t_hash *hash)
 	{
 		if (ssl->s == 0)
 		{
-			ft_putstr(" *stdin");
-			// ft_putstr(hash->name);
+			ft_putstr(" *");
+			ft_putstr(hash->name);
 		}
 		else
 		{
@@ -84,21 +86,26 @@ static void	hex_print_hash(uint8_t *result, int len)
 
 void	print_hash(t_ssl *ssl, t_hash *hash, uint8_t *result)
 {
-	ft_putstr("p = \t");
-	ft_putnbr_fd(ssl->p, 1);
-	ft_putstr("\n");
-	ft_putstr("q = \t");
-	ft_putnbr_fd(ssl->q, 1);
-	ft_putstr("\n");
-	ft_putstr("r = \t");
-	ft_putnbr_fd(ssl->r, 1);
-	ft_putstr("\n");
-	ft_putstr("s = \t");
-	ft_putnbr_fd(ssl->s, 1);
-	ft_putstr("\n");
-	ft_putstr("type = \t");
-	ft_putnbr_fd(hash->type, 1);
-	ft_putstr("\n");
+	if (IS_DEBUG)
+	{
+		ft_putstr("----------------------------\n");
+		ft_putstr("p = \t");
+		ft_putnbr_fd(ssl->p, 1);
+		ft_putstr("\n");
+		ft_putstr("q = \t");
+		ft_putnbr_fd(ssl->q, 1);
+		ft_putstr("\n");
+		ft_putstr("r = \t");
+		ft_putnbr_fd(ssl->r, 1);
+		ft_putstr("\n");
+		ft_putstr("s = \t");
+		ft_putnbr_fd(ssl->s, 1);
+		ft_putstr("\n");
+		ft_putstr("type = \t");
+		ft_putnbr_fd(hash->type, 1);
+		ft_putstr("\n");
+		ft_putstr("----------------------------\n");
+	}
 
 	if (!result)
 		return ;

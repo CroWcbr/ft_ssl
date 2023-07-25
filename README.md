@@ -2,11 +2,8 @@
 
 my PC has LITTLE-endian format
 
-# Features
-At first I did it with norminette.... bonuses without norminette. How easy write whitout norminette....
-
 ## Tester
-- Tester located ./src/tester
+- Tester located ./src/tester (md5, sha256, sha512, whirlpool)
 
 ## Mandatory
 - md5
