@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 22:37:14 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/07/21 00:48:22 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/08/05 02:49:29 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,19 +94,19 @@ uint8_t	*sha256_main(const char *str, const uint64_t len)
 uint8_t	*sha256d_main(const char *str, const uint64_t len)
 {
 	uint8_t	*result = sha256_main(str, len);
-	
-	uint8_t hash[64];
-	for(int i = 0; i < 32; ++i)
-	{
-		hash[i * 2] = (result[i] >> 4) + '0';
-		hash[i*2 + 1] = (result[i] & 0x0f) + '0';
-		if (hash[i * 2] > '9')
-			hash[i * 2] += 39;
-		if (hash[i*2 + 1] > '9')
-			hash[i*2 + 1] += 39;
-	}
+	// uint8_t hash[64];
+	// for(int i = 0; i < 32; ++i)
+	// {
+	// 	hash[i * 2] = (result[i] >> 4) + '0';
+	// 	hash[i*2 + 1] = (result[i] & 0x0f) + '0';
+	// 	if (hash[i * 2] > '9')
+	// 		hash[i * 2] += 39;
+	// 	if (hash[i*2 + 1] > '9')
+	// 		hash[i*2 + 1] += 39;
+	// }
+	// uint8_t	*result2 = sha256_main((const char*)hash, 64);
+	uint8_t	*result2 = sha256_main((const char*)result, 32);
 	free(result);
-	uint8_t	*result2 = sha256_main((const char*)hash, 64);
 	return(result2);
 }
 

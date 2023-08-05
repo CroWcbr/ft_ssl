@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:49:28 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/07/25 09:07:50 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/08/01 11:58:34 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	pre_print_hash(t_ssl *ssl, t_hash *hash)
 	else if (ssl->q == 0 && hash->type == 0 && ssl->p == 1)
 	{
 		ft_putstr("(\"");
-		write(STDOUT_FILENO, hash->name, ft_strlen(hash->name) - 1);
+		write(STDOUT_FILENO, hash->name, ft_strlen(hash->name));
 		ft_putstr("\")= ");
 	}
 	else if (ssl->q == 0 && hash->type == 0 && \
