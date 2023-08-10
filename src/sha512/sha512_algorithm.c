@@ -6,7 +6,7 @@
 /*   By: cdarrell <cdarrell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 17:23:27 by cdarrell          #+#    #+#             */
-/*   Updated: 2023/02/27 17:55:53 by cdarrell         ###   ########.fr       */
+/*   Updated: 2023/08/10 23:11:45 by cdarrell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 static void	sha512_find_w(uint64_t *w, const uint64_t *str)
 {
 	uint32_t	i;
-	uint32_t	j;
 
 	i = 0;
-	j = 0;
 	while (i < 16)
 	{
 		w[i] = ((((str[i]) & 0xff00000000000000ull) >> 56) | \
@@ -30,7 +28,6 @@ static void	sha512_find_w(uint64_t *w, const uint64_t *str)
 			(((str[i]) & 0x000000000000ff00ull) << 40) | \
 			(((str[i]) & 0x00000000000000ffull) << 56));
 		i++;
-		j += 8;
 	}
 	while (i < 80)
 	{
